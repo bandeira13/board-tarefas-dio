@@ -44,12 +44,28 @@ public class CardService {
         try (Connection connection = ConnectionConfig.getConnection()) {
             try {
                 card.setColumnId(newColumnId);
-                cardDAO.update(card, connection); // O método update do DAO vai persistir a mudança
+                cardDAO.update(card, connection);
                 connection.commit();
                 System.out.println("Card '" + card.getTitle() + "' movido com sucesso!");
             } catch (SQLException e) {
                 System.err.println("Erro ao mover o card. Desfazendo a transação.");
                 connection.rollback();
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro de conexão com o banco de dados.");
+            e.printStackTrace();
+        }
+    }
+    public void deleteCard(int cardId) {
+        try (Connection connection = ConnectionConfig.getConnection()) {
+            try {
+                cardDAO.delete(cardId, connection);
+                connection.commit();
+                System.out.println("Card com ID " + cardId + " deletado com sucesso.");
+            } catch (SQLException e) {
+                connection.rollback();
+                System.err.println("Erro ao deletar o card. Desfazendo a transação.");
                 e.printStackTrace();
             }
         } catch (SQLException e) {

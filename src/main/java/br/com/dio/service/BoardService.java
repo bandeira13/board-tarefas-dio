@@ -47,13 +47,31 @@ public class BoardService {
         }
     }
 
+    public boolean deleteBoard(int boardId) {
+        // Para deletar, primeiro precisamos consultar se o board existe.
+        // É comum um serviço de comando usar um DAO de leitura para validações.
+        if (boardDAO.findById(boardId).isEmpty()) {
+            System.err.println("Não foi encontrado um board com id " + boardId);
+            return false;
+        }
 
-    public Optional<Board> findBoardById(int id) {
-        return boardDAO.findById(id);
-    }
-
-    public List<Board> findAllBoards() {
-        return boardDAO.findAll();
+        try (Connection connection = ConnectionConfig.getConnection()) {
+            try {
+                boardDAO.deleteById(boardId, connection);
+                connection.commit();
+                System.out.println("Board com ID " + boardId + " foi deletado com sucesso.");
+                return true;
+            } catch (SQLException e) {
+                connection.rollback();
+                System.err.println("Erro ao deletar o board. Desfazendo a transação (rollback).");
+                e.printStackTrace();
+                return false;
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao obter ou fechar a conexão com o banco.");
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 
