@@ -13,9 +13,6 @@ public class Card {
     private String description;
     private int columnId;
 
-    public Card() {
-    }
-
     public Card(String title, String description, int columnId) {
         this.title = title;
         this.description = description;

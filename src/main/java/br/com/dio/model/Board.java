@@ -9,8 +9,6 @@ public class Board {
     private int id;
     private String name;
 
-    public Board(){}
-
     public Board (String name){
         this.name = name;
     }
