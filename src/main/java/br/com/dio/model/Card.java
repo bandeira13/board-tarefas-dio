@@ -6,13 +6,15 @@ public class Card {
     private String description;
     private int columnId;
 
-    public Card (){}
+    public Card() {
+    }
 
     public Card(String title, String description, int columnId) {
         this.title = title;
         this.description = description;
         this.columnId = columnId;
     }
+
     public Card(int id) {
         this.id = id;
     }
@@ -47,5 +49,13 @@ public class Card {
 
     public void setColumnId(int columnId) {
         this.columnId = columnId;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ",title=' " + title + '\'' +
+                '}';
     }
 }
