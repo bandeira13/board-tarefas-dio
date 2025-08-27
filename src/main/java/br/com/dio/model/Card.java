@@ -1,5 +1,12 @@
 package br.com.dio.model;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+
 public class Card {
     private int id;
     private String title;
@@ -15,47 +22,5 @@ public class Card {
         this.columnId = columnId;
     }
 
-    public Card(int id) {
-        this.id = id;
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getColumnId() {
-        return columnId;
-    }
-
-    public void setColumnId(int columnId) {
-        this.columnId = columnId;
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "id=" + id +
-                ",title=' " + title + '\'' +
-                '}';
-    }
 }
