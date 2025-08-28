@@ -4,6 +4,7 @@ import br.com.dio.model.Card;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface CardDAO {
     void save(Card card, Connection connection) throws SQLException;
@@ -13,4 +14,5 @@ public interface CardDAO {
     void delete(int cardId, Connection connection) throws SQLException;
 
     List<Card> findByColumnId(int columnId);
+    Optional<Card> findById(int cardId);
 }

@@ -5,7 +5,7 @@ plugins {
 group = 'br.com.dio'
 version = '1.0-SNAPSHOT'
 
-// Adiciona a configuração para garantir o uso do Java 24
+
 java {
     sourceCompatibility = JavaVersion.VERSION_24
     targetCompatibility = JavaVersion.VERSION_24
@@ -17,9 +17,8 @@ repositories {
 
 dependencies {
     implementation("org.liquibase:liquibase-core:4.29.1")
-    implementation("mysql:mysql-connector-java:8.0.33")
 
-    // Versão do Lombok corrigida para ser compatível com o JDK 24
+    runtimeOnly("com.h2database:h2:2.2.224")
     implementation("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
 }

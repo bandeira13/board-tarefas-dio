@@ -3,7 +3,7 @@ package br.com.dio.service;
 import br.com.dio.model.Card;
 import br.com.dio.persistence.dao.CardDAO;
 import br.com.dio.persistence.dao.CardDAOImpl;
-
+import java.util.Optional;
 import java.util.List;
 
 public class CardQueryService {
@@ -16,4 +16,9 @@ public class CardQueryService {
     public List<Card> findAllCardsByColumnId(int columnId) {
         return cardDAO.findByColumnId(columnId);
     }
+
+    public Optional<Card> findCardById(int cardId) {
+        return cardDAO.findById(cardId);
+    }
 }
+

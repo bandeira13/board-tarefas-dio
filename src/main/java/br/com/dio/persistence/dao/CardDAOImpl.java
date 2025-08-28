@@ -9,8 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class CardDAOImpl implements CardDAO{
+public class CardDAOImpl implements CardDAO {
+
     @Override
     public void save(Card card, Connection connection) throws SQLException {
         String sql = "INSERT INTO cards (title, description, column_id) VALUES (?, ?, ?)";
@@ -24,7 +26,7 @@ public class CardDAOImpl implements CardDAO{
 
     @Override
     public void update(Card card, Connection connection) throws SQLException {
-        // Você pode atualizar título, descrição ou mover o card (alterando column_id)
+
         String sql = "UPDATE cards SET title = ?, description = ?, column_id = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, card.getTitle());
@@ -65,5 +67,29 @@ public class CardDAOImpl implements CardDAO{
             e.printStackTrace();
         }
         return cards;
+    }
+
+
+    @Override
+    public Optional<Card> findById(int cardId) {
+        String sql = "SELECT id, title, description, column_id FROM cards WHERE id = ?";
+        try (Connection conn = ConnectionConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, cardId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    Card card = new Card();
+                    card.setId(rs.getInt("id"));
+                    card.setTitle(rs.getString("title"));
+                    card.setDescription(rs.getString("description"));
+                    card.setColumnId(rs.getInt("column_id"));
+                    return Optional.of(card);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

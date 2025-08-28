@@ -3,13 +3,15 @@ package br.com.dio;
 import br.com.dio.model.Board;
 import br.com.dio.model.BoardColumn;
 import br.com.dio.model.Card;
+import br.com.dio.persistence.config.ConnectionConfig;
 import br.com.dio.service.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Main {private static final BoardService boardService = new BoardService();
+public class Main {
+    private static final BoardService boardService = new BoardService();
     private static final CardService cardService = new CardService();
     private static final BoardQueryService boardQueryService = new BoardQueryService();
     private static final BoardColumnQueryService boardColumnQueryService = new BoardColumnQueryService();
@@ -18,6 +20,8 @@ public class Main {private static final BoardService boardService = new BoardSer
     private static final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
     public static void main(String[] args) {
+        ConnectionConfig.initializeDatabase();
+
         System.out.println("Bem-vindo ao seu Board de Tarefas!");
         mainMenuLoop();
     }
@@ -34,7 +38,7 @@ public class Main {private static final BoardService boardService = new BoardSer
                     System.out.println("Até logo!");
                     return;
                 }
-                default -> System.out.println("Opção inválida. Tente novamente.");
+                default -> System.out.println("Opcao inválida. Tente novamente.");
             }
         }
     }
@@ -46,7 +50,7 @@ public class Main {private static final BoardService boardService = new BoardSer
         System.out.println("3. Deletar um quadro");
         System.out.println("4. Selecionar um quadro");
         System.out.println("5. Sair");
-        System.out.print("Escolha uma opção: ");
+        System.out.print("Escolha uma opcao: ");
     }
 
     private static void createNewBoard() {
@@ -95,7 +99,7 @@ public class Main {private static final BoardService boardService = new BoardSer
                 case 3 -> moveCard(board);
                 case 4 -> deleteCard();
                 case 5 -> { return; }
-                default -> System.out.println("Opção inválida.");
+                default -> System.out.println("Opcao inválida.");
             }
         }
     }
@@ -146,10 +150,32 @@ public class Main {private static final BoardService boardService = new BoardSer
         cardService.createNewCard(title, description, columnId);
     }
 
-    private static void moveCard(Board board) {
 
-        System.out.println("Funcionalidade de mover ainda em construção.");
-        
+    private static void moveCard(Board board) {
+        System.out.print("\nDigite o ID do cartão que deseja mover: ");
+        int cardId = scanner.nextInt();
+
+
+        Optional<Card> cardOptional = cardQueryService.findCardById(cardId);
+        if (cardOptional.isEmpty()) {
+            System.err.println("Cartão com ID " + cardId + " não foi encontrado.");
+            return;
+        }
+
+        System.out.println("\nPara qual coluna você deseja mover o cartão?");
+        List<BoardColumn> columns = boardColumnQueryService.findAllByBoardId(board.getId());
+        columns.forEach(c -> System.out.printf("ID: %d - Nome: %s\n", c.getId(), c.getName()));
+        System.out.print("Digite o ID da nova coluna: ");
+        int newColumnId = scanner.nextInt();
+
+
+        boolean columnExistsInBoard = columns.stream().anyMatch(c -> c.getId() == newColumnId);
+        if (!columnExistsInBoard) {
+            System.err.println("ID de coluna inválido ou não pertence a este quadro.");
+            return;
+        }
+
+        cardService.moveCard(cardOptional.get(), newColumnId);
     }
 
     private static void deleteCard() {

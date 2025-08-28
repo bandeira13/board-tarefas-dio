@@ -10,8 +10,6 @@ import br.com.dio.persistence.dao.BoardDAOImpl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 public class BoardService {
     private final BoardDAO boardDAO;
     private final BoardColumnDAO boardColumnDAO;
@@ -48,8 +46,7 @@ public class BoardService {
     }
 
     public boolean deleteBoard(int boardId) {
-        // Para deletar, primeiro precisamos consultar se o board existe.
-        // É comum um serviço de comando usar um DAO de leitura para validações.
+
         if (boardDAO.findById(boardId).isEmpty()) {
             System.err.println("Não foi encontrado um board com id " + boardId);
             return false;
