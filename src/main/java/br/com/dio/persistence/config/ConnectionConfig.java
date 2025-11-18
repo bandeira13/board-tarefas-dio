@@ -1,5 +1,12 @@
 package br.com.dio.persistence.config;
 
+import liquibase.Contexts;
+import liquibase.LabelExpression;
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.LiquibaseException;
 import lombok.NoArgsConstructor;
 
 import java.sql.Connection;
@@ -34,17 +41,19 @@ public final class ConnectionConfig {
 
     public static void initializeDatabase() {
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
-            String createBoards = "CREATE TABLE IF NOT EXISTS boards (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL);";
-            String createColumns = "CREATE TABLE IF NOT EXISTS board_columns (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, board_id INT, FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE);";
-            String createCards = "CREATE TABLE IF NOT EXISTS cards (id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255) NOT NULL, description TEXT, column_id INT, FOREIGN KEY (column_id) REFERENCES board_columns(id) ON DELETE CASCADE);";
+           Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(conn));
 
-            stmt.execute(createBoards);
-            stmt.execute(createColumns);
-            stmt.execute(createCards);
-            conn.commit();
-            System.out.println("Banco de dados em memória inicializado com sucesso.");
+            Liquibase liquibase = new Liquibase("db/changelog/db.changelog-master.yaml",
+                    new liquibase.resource.ClassLoaderResourceAccessor(),
+                    database);
+
+            liquibase.update(new Contexts(), new LabelExpression());
+
+            System.out.println("Banco de dados (Liquibase) inicializado com sucesso.");
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inicializar o banco de dados.", e);
+            throw new RuntimeException("Erro ao obter ou fechar a conexão com o banco.", e);
+        } catch (LiquibaseException e) {
+            throw new RuntimeException("Erro ao executar as migrações do Liquibase.", e);
         }
     }
 }
