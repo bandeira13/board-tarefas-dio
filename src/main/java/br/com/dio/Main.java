@@ -6,11 +6,15 @@ import br.com.dio.model.Card;
 import br.com.dio.persistence.config.ConnectionConfig;
 import br.com.dio.service.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private static final BoardService boardService = new BoardService();
     private static final CardService cardService = new CardService();
     private static final BoardQueryService boardQueryService = new BoardQueryService();

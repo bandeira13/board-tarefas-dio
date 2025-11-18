@@ -8,9 +8,15 @@ import br.com.dio.persistence.dao.BoardColumnDAOImpl;
 import br.com.dio.persistence.dao.BoardDAO;
 import br.com.dio.persistence.dao.BoardDAOImpl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+
 public class BoardService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
     private final BoardDAO boardDAO;
     private final BoardColumnDAO boardColumnDAO;
 
@@ -20,13 +26,10 @@ public class BoardService {
         this.boardColumnDAO = new BoardColumnDAOImpl();
     }
     public void createNewBoard(String boardName) {
-        // O try-with-resources gerencia o fechamento da conexão
         try (Connection connection = ConnectionConfig.getConnection()) {
             try {
                 Board newBoard = new Board(boardName);
-                boardDAO.save(newBoard, connection); // Passa a conexão para o DAO
-
-
+                boardDAO.save(newBoard, connection);
                 boardColumnDAO.save(new BoardColumn("A Fazer", newBoard.getId()), connection);
                 boardColumnDAO.save(new BoardColumn("Em Progresso", newBoard.getId()), connection);
                 boardColumnDAO.save(new BoardColumn("Concluído", newBoard.getId()), connection);

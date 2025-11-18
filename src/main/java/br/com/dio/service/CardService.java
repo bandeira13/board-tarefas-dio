@@ -5,10 +5,15 @@ import br.com.dio.persistence.config.ConnectionConfig;
 import br.com.dio.persistence.dao.CardDAO;
 import br.com.dio.persistence.dao.CardDAOImpl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CardService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CardService.class);
     private final CardDAO cardDAO;
 
     public CardService() {
