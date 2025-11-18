@@ -25,17 +25,25 @@ application {
 }
 
 dependencies {
+
+    //spring boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //logging
     implementation 'ch.qos.logback:logback-classic:1.5.6'
-}
 
-dependencies {
+    //banco de dados
     implementation("org.liquibase:liquibase-core:4.29.1")
-
     runtimeOnly("com.h2database:h2:2.2.224")
+
+    //lombok
     implementation("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
-}
 
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
 
 test {
     useJUnitPlatform()
