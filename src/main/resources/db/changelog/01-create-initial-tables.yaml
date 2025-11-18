@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: bandeira13
+      changes:
+        - createTable:
+            tableName: boards
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: bandeira13
+      changes:
+        - createTable:
+            tableName: board_columns
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: board_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_column_board
+                    references: boards(id)
+                    onDelete: CASCADE # Relacionamento de exclusão
+
+  - changeSet:
+      id: 3
+      author: bandeira13
+      changes:
+        - createTable:
+            tableName: cards
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: column_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_card_column
+                    references: board_columns(id)
+                    onDelete: CASCADE # Relacionamento de exclusão
