@@ -14,7 +14,7 @@ public final class ConnectionConfig {
 
     static {
         try {
-            // Carrega o driver do H2 Database
+
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Erro ao carregar o driver JDBC do H2", e);
@@ -23,7 +23,7 @@ public final class ConnectionConfig {
 
     public static Connection getConnection() throws SQLException {
 
-        var url = "jdbc:h2:mem:board;DB_CLOSE_DELAY=-1;MODE=MySQL";
+        var url = "jdbc:h2:./board_db;DB_CLOSE_DELAY=-1;MODE=MySQL";
         var user = "sa";
         var password = "";
 
