@@ -35,15 +35,15 @@ public class BoardService {
                 boardColumnDAO.save(new BoardColumn("Concluído", newBoard.getId()), connection);
 
                 connection.commit();
-                System.out.println("Board '" + boardName + "' criado com sucesso!");
+                logger.info("Board '" + boardName + "' criado com sucesso!");
 
             } catch (SQLException e) {
-                System.err.println("Erro ao criar o board. Desfazendo a transação (rollback).");
+                logger.error("Erro ao criar o board. Desfazendo a transação (rollback).");
                 connection.rollback();
                 e.printStackTrace();
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao obter ou fechar a conexão com o banco.");
+            logger.error("Erro ao obter ou fechar a conexão com o banco.");
             e.printStackTrace();
         }
     }
@@ -51,7 +51,7 @@ public class BoardService {
     public boolean deleteBoard(int boardId) {
 
         if (boardDAO.findById(boardId).isEmpty()) {
-            System.err.println("Não foi encontrado um board com id " + boardId);
+            logger.warn("Não foi encontrado um board com id " + boardId);
             return false;
         }
 
@@ -59,16 +59,15 @@ public class BoardService {
             try {
                 boardDAO.deleteById(boardId, connection);
                 connection.commit();
-                System.out.println("Board com ID " + boardId + " foi deletado com sucesso.");
+                logger.info("Board com ID " + boardId + " foi deletado com sucesso.");
                 return true;
             } catch (SQLException e) {
                 connection.rollback();
-                System.err.println("Erro ao deletar o board. Desfazendo a transação (rollback).");
+                logger.error("Erro ao deletar o board. Desfazendo a transação (rollback).");
                 e.printStackTrace();
                 return false;
             }
-        } catch (SQLException e) {
-            System.err.println("Erro ao obter ou fechar a conexão com o banco.");
+        } catch (SQLException e) {logger.error("Erro ao obter ou fechar a conexão com o banco.");
             e.printStackTrace();
             return false;
         }
