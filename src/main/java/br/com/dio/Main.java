@@ -22,9 +22,10 @@ public class Main {
     private final BoardQueryService boardQueryService = new BoardQueryService();
     private final BoardColumnQueryService boardColumnQueryService = new BoardColumnQueryService();
     private final CardQueryService cardQueryService = new CardQueryService();
-    private final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+    private static final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
     public void startCLI() {
+        ConnectionConfig.initializeDatabase();
 
         logger.info("Bem-vindo ao seu Board de Tarefas!");
         mainMenuLoop();
