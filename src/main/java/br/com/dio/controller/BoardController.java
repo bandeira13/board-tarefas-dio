@@ -1,5 +1,6 @@
 package br.com.dio.controller;
 
+import br.com.dio.dto.BoardDTO;
 import br.com.dio.dto.CreateBoardRequest;
 import br.com.dio.exception.NotFoundException;
 import br.com.dio.model.Board; // Assume que o Model Board é usado
@@ -34,9 +35,9 @@ public class BoardController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Board> findBoardById(@PathVariable int id) {
+    public ResponseEntity<BoardDTO> findBoardById(@PathVariable int id) {
 
-        Optional<Board> board = boardQueryService.findBoardByIdWithColumnsAndCards(id);
+        Optional<BoardDTO> board = boardQueryService.findBoardByIdWithColumnsAndCards(id);
 
 
         return board.map(ResponseEntity::ok)

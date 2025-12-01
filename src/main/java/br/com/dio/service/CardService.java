@@ -38,6 +38,30 @@ public class CardService {
             e.printStackTrace();
         }
     }
+    public void updateCard(Card card, String newTitle, String newDescription) {
+        if (card == null || card.getId() == 0) {
+            System.err.println("Erro: Card inválido ou não salvo no banco.");
+            return;
+        }
+
+        try (Connection connection = ConnectionConfig.getConnection()) {
+            try {
+                card.setTitle(newTitle);
+                card.setDescription(newDescription);
+
+                cardDAO.update(card, connection);
+                connection.commit();
+                System.out.println("Card com ID " + card.getId() + " atualizado com sucesso!");
+            } catch (SQLException e) {
+                System.err.println("Erro ao atualizar o card. Desfazendo a transação.");
+                connection.rollback();
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro de conexão com o banco de dados.");
+            e.printStackTrace();
+        }
+    }
 
     public void moveCard(Card card, int newColumnId) {
 

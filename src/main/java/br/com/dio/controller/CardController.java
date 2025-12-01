@@ -1,12 +1,16 @@
 package br.com.dio.controller;
 
-
 import br.com.dio.dto.CreateCardRequest;
 import br.com.dio.dto.MoveCardRequest;
+import br.com.dio.dto.UpdateCardRequest;
+
 import br.com.dio.exception.NotFoundException;
+
 import br.com.dio.model.Card;
+
 import br.com.dio.service.CardQueryService;
 import br.com.dio.service.CardService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +31,16 @@ public class CardController {
     public void createCard(@Validated @RequestBody CreateCardRequest request) {
         cardService.createNewCard(request.getTitle(), request.getDescription(), request.getColumnId());
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateCard(@PathVariable int id, @Validated @RequestBody UpdateCardRequest request) {
 
+        Card card = cardQueryService.findCardById(id)
+                .orElseThrow(() -> new NotFoundException("Cartão com ID " + id + " não encontrado."));
+
+        cardService.updateCard(card, request.getTitle(), request.getDescription());
+
+        return ResponseEntity.ok().build();
+    }
 
     @PutMapping("/{id}/move")
     public ResponseEntity<Void> moveCard(@PathVariable int id, @Validated @RequestBody MoveCardRequest request) {

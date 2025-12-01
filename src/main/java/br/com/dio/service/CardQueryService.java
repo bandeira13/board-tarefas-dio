@@ -5,6 +5,7 @@ import br.com.dio.persistence.dao.CardDAO;
 import br.com.dio.persistence.dao.CardDAOImpl;
 import java.util.Optional;
 import java.util.List;
+import br.com.dio.dto.CardDTO;
 
 public class CardQueryService {
     private final CardDAO cardDAO;
@@ -19,6 +20,15 @@ public class CardQueryService {
 
     public Optional<Card> findCardById(int cardId) {
         return cardDAO.findById(cardId);
+    }
+
+    public static CardDTO toCardDTO(Card card) {
+        if (card == null) return null;
+        CardDTO dto = new CardDTO();
+        dto.setId(card.getId());
+        dto.setTitle(card.getTitle());
+        dto.setDescription(card.getDescription());
+        return dto;
     }
 }
 

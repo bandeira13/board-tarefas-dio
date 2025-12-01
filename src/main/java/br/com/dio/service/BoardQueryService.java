@@ -3,10 +3,17 @@ package br.com.dio.service;
 import br.com.dio.model.Board;
 import br.com.dio.model.BoardColumn;
 import br.com.dio.model.Card;
+
 import br.com.dio.persistence.dao.BoardColumnDAO;
 import br.com.dio.persistence.dao.BoardColumnDAOImpl;
 import br.com.dio.persistence.dao.BoardDAO;
 import br.com.dio.persistence.dao.BoardDAOImpl;
+
+import java.util.stream.Collectors;
+
+import br.com.dio.dto.BoardDTO;
+import br.com.dio.dto.BoardColumnDTO;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +44,7 @@ public class BoardQueryService {
         return boardColumnDAO.findAllByBoardId(boardId);
     }
 
-    public Optional<Board> findBoardByIdWithColumnsAndCards(int boardId) {
+    public Optional<BoardDTO> findBoardByIdWithColumnsAndCards(int boardId) {
         Optional<Board> boardOptional = boardDAO.findById(boardId);
 
         if (boardOptional.isEmpty()) {
@@ -45,13 +52,36 @@ public class BoardQueryService {
         }
 
         Board board = boardOptional.get();
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(board.getId());
+        boardDTO.setName(board.getName());
+
 
         List<BoardColumn> columns = boardColumnDAO.findAllByBoardId(boardId);
 
-        for (BoardColumn column : columns) {
-            List<Card> cards = cardQueryService.findAllCardsByColumnId(column.getId());
-        }
 
-        return Optional.of(board);
+        List<BoardColumnDTO> columnDTOs = columns.stream()
+                .map(column -> {
+                    BoardColumnDTO columnDTO = new BoardColumnDTO();
+
+
+                    columnDTO.setId(column.getId());
+                    columnDTO.setName(column.getName());
+
+
+                    List<Card> cards = cardQueryService.findAllCardsByColumnId(column.getId());
+                    columnDTO.setCards(
+                            cards.stream()
+                                    .map(CardQueryService::toCardDTO)
+                                    .collect(Collectors.toList())
+                    );
+                    return columnDTO;
+                })
+                .collect(Collectors.toList());
+
+        boardDTO.setColumns(columnDTOs);
+
+
+        return Optional.of(boardDTO);
     }
 }
