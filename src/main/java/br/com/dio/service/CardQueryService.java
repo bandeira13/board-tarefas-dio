@@ -6,7 +6,9 @@ import br.com.dio.persistence.dao.CardDAOImpl;
 import java.util.Optional;
 import java.util.List;
 import br.com.dio.dto.CardDTO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CardQueryService {
     private final CardDAO cardDAO;
 

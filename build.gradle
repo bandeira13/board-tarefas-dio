@@ -23,7 +23,7 @@ javafx {
     modules = ['javafx.controls' , 'javafx.fxml']
 }
 application {
-    mainClass = 'br.com.dio.ui.BoardApplication'
+    mainClass = 'br.com.dio.BoardApiApplication'
 }
 
 dependencies {

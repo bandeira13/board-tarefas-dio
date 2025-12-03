@@ -2,6 +2,7 @@ package br.com.dio.persistence.dao;
 
 import br.com.dio.model.BoardColumn;
 import br.com.dio.persistence.config.ConnectionConfig;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class BoardColumnDAOImpl implements BoardColumnDAO {
     @Override
     public void save(BoardColumn column, Connection connection) throws SQLException {

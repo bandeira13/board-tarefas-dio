@@ -3,9 +3,12 @@ package br.com.dio.controller;
 import br.com.dio.dto.BoardDTO;
 import br.com.dio.dto.CreateBoardRequest;
 import br.com.dio.exception.NotFoundException;
-import br.com.dio.model.Board; // Assume que o Model Board é usado
+
+import br.com.dio.model.Board;
+
 import br.com.dio.service.BoardQueryService;
 import br.com.dio.service.BoardService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

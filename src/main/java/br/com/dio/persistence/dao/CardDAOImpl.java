@@ -2,6 +2,7 @@ package br.com.dio.persistence.dao;
 
 import br.com.dio.model.Card;
 import br.com.dio.persistence.config.ConnectionConfig;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class CardDAOImpl implements CardDAO {
 
     @Override

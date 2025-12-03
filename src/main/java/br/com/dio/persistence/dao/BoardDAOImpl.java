@@ -2,12 +2,14 @@ package br.com.dio.persistence.dao;
 
 import br.com.dio.model.Board;
 import br.com.dio.persistence.config.ConnectionConfig;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class BoardDAOImpl implements BoardDAO{
     @Override
     public Board save(Board board, Connection connection) throws SQLException {

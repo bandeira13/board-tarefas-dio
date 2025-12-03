@@ -16,13 +16,21 @@ import java.util.Scanner;
 
 @Component
 public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    private final BoardService boardService = new BoardService();
-    private final CardService cardService = new CardService();
-    private final BoardQueryService boardQueryService = new BoardQueryService();
-    private final BoardColumnQueryService boardColumnQueryService = new BoardColumnQueryService();
-    private final CardQueryService cardQueryService = new CardQueryService();
-    private static final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+    private final Logger logger = LoggerFactory.getLogger(Main.class);
+    private final BoardService boardService ;
+    private final CardService cardService;
+    private final BoardQueryService boardQueryService ;
+    private final BoardColumnQueryService boardColumnQueryService ;
+    private final CardQueryService cardQueryService;
+    private final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+    public Main(BoardService boardService, CardService cardService, BoardQueryService boardQueryService, BoardColumnQueryService boardColumnQueryService, CardQueryService cardQueryService) {
+        this.boardService = boardService;
+        this.cardService = cardService;
+        this.boardQueryService = boardQueryService;
+        this.boardColumnQueryService = boardColumnQueryService;
+        this.cardQueryService = cardQueryService;
+    }
 
     public void startCLI() {
         ConnectionConfig.initializeDatabase();
