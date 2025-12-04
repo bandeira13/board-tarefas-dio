@@ -4,9 +4,7 @@ import br.com.dio.model.Board;
 import br.com.dio.model.BoardColumn;
 import br.com.dio.persistence.config.ConnectionConfig;
 import br.com.dio.persistence.dao.BoardColumnDAO;
-import br.com.dio.persistence.dao.BoardColumnDAOImpl;
 import br.com.dio.persistence.dao.BoardDAO;
-import br.com.dio.persistence.dao.BoardDAOImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +21,9 @@ public class BoardService {
     private final BoardColumnDAO boardColumnDAO;
 
 
-    public BoardService() {
-        this.boardDAO = new BoardDAOImpl();
-        this.boardColumnDAO = new BoardColumnDAOImpl();
+    public BoardService(BoardDAO boardDAO, BoardColumnDAO boardColumnDAO) {
+        this.boardDAO = boardDAO;
+        this.boardColumnDAO = boardColumnDAO;
     }
     public void createNewBoard(String boardName) {
         try (Connection connection = ConnectionConfig.getConnection()) {
@@ -75,4 +73,3 @@ public class BoardService {
         }
     }
 }
-

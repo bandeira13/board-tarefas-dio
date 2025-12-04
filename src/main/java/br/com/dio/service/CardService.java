@@ -2,6 +2,7 @@ package br.com.dio.service;
 
 import br.com.dio.model.Card;
 import br.com.dio.persistence.config.ConnectionConfig;
+import br.com.dio.persistence.dao.BoardDAO;
 import br.com.dio.persistence.dao.CardDAO;
 import br.com.dio.persistence.dao.CardDAOImpl;
 
@@ -18,7 +19,8 @@ public class CardService {
     private static final Logger logger = LoggerFactory.getLogger(CardService.class);
     private final CardDAO cardDAO;
 
-    public CardService() {
+    public CardService( BoardDAO boardDAO) {
+
         this.cardDAO = new CardDAOImpl();
     }
 

@@ -5,9 +5,7 @@ import br.com.dio.model.BoardColumn;
 import br.com.dio.model.Card;
 
 import br.com.dio.persistence.dao.BoardColumnDAO;
-import br.com.dio.persistence.dao.BoardColumnDAOImpl;
 import br.com.dio.persistence.dao.BoardDAO;
-import br.com.dio.persistence.dao.BoardDAOImpl;
 
 import java.util.stream.Collectors;
 
@@ -21,22 +19,25 @@ import java.util.Optional;
 
 @Service
 public class BoardQueryService {
-    private final BoardDAO boardDAO;
     private final BoardColumnDAO boardColumnDAO;
     private final CardQueryService cardQueryService;
+    private final BoardDAO boardDAO;
 
-    public BoardQueryService() {
-        this.boardDAO = new BoardDAOImpl();
-        this.boardColumnDAO = new BoardColumnDAOImpl();
-        this.cardQueryService = new CardQueryService();
+    public BoardQueryService(BoardDAO boardDAO, BoardColumnDAO boardColumnDAO , CardQueryService cardQueryService ) {
+        this.boardDAO = boardDAO;
+        this.cardQueryService = cardQueryService;
+        this.boardColumnDAO = boardColumnDAO;
+
     }
 
 
     public Optional<Board> findBoardById(int id) {
+
         return boardDAO.findById(id);
     }
 
     public List<Board> findAllBoards() {
+
         return boardDAO.findAll();
     }
 

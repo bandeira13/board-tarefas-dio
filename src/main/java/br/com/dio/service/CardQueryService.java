@@ -2,7 +2,6 @@ package br.com.dio.service;
 
 import br.com.dio.model.Card;
 import br.com.dio.persistence.dao.CardDAO;
-import br.com.dio.persistence.dao.CardDAOImpl;
 import java.util.Optional;
 import java.util.List;
 import br.com.dio.dto.CardDTO;
@@ -12,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class CardQueryService {
     private final CardDAO cardDAO;
 
-    public CardQueryService() {
-        this.cardDAO = new CardDAOImpl();
+    public CardQueryService(CardDAO cardDAO) {
+        this.cardDAO =  cardDAO;
     }
 
     public List<Card> findAllCardsByColumnId(int columnId) {
@@ -33,4 +32,3 @@ public class CardQueryService {
         return dto;
     }
 }
-

@@ -31,9 +31,8 @@ dependencies {
     //spring boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
-    //logging
-    implementation 'ch.qos.logback:logback-classic:1.5.6'
 
     //banco de dados
     implementation("org.liquibase:liquibase-core:4.29.1")

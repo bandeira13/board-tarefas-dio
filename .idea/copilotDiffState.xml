@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/br/com/dio/service/BoardColumnQueryService.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/br/com/dio/service/BoardColumnQueryService.java" />
+              <option name="originalContent" value="package br.com.dio.service;&#10;&#10;import br.com.dio.model.BoardColumn;&#10;import br.com.dio.persistence.dao.BoardColumnDAO;&#10;import org.springframework.stereotype.Service;&#10;&#10;import java.util.List;&#10;&#10;@Service&#10;public class BoardColumnQueryService {&#10;    private final BoardColumnDAO boardColumnDAO;&#10;&#10;    public BoardColumnQueryService(BoardColumnDAO boardColumnDAO) {&#10;&#10;        this.boardColumnDAO =  boardColumnDAO;&#10;    }&#10;&#10;    public List&lt;BoardColumn&gt; findAllByBoardId(int boardId) {&#10;&#10;        return boardColumnDAO.findAllByBoardId(boardId);&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package br.com.dio.service;&#10;&#10;import br.com.dio.model.BoardColumn;&#10;import br.com.dio.persistence.dao.BoardColumnDAO;&#10;import org.springframework.stereotype.Service;&#10;&#10;import java.util.List;&#10;&#10;@Service&#10;public class BoardColumnQueryService {&#10;    private final BoardColumnDAO boardColumnDAO;&#10;&#10;    public BoardColumnQueryService(BoardColumnDAO boardColumnDAO) {&#10;&#10;        this.boardColumnDAO =  boardColumnDAO;&#10;    }&#10;&#10;    public List&lt;BoardColumn&gt; findAllByBoardId(int boardId) {&#10;&#10;        return boardColumnDAO.findAllByBoardId(boardId);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
