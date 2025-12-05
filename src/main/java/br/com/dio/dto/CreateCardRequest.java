@@ -1,18 +1,31 @@
 package br.com.dio.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-
-@Data
 public class CreateCardRequest {
-
-
-    @NotBlank(message = "O título é obrigatório.")
     private String title;
-
     private String description;
-
-    @Min(value = 1, message = "O ID da coluna deve ser válido.")
     private int columnId;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getColumnId() {
+        return columnId;
+    }
+
+    public void setColumnId(int columnId) {
+        this.columnId = columnId;
+    }
 }

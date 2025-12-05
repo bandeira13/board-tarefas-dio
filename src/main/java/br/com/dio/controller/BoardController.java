@@ -5,7 +5,9 @@ import br.com.dio.dto.CreateBoardRequest;
 import br.com.dio.exception.NotFoundException;
 
 import br.com.dio.model.Board;
+import br.com.dio.model.BoardColumn;
 
+import br.com.dio.service.BoardColumnQueryService;
 import br.com.dio.service.BoardQueryService;
 import br.com.dio.service.BoardService;
 
@@ -19,23 +21,26 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/boards")
+@CrossOrigin(origins = "*")
 public class BoardController {
 
     private final BoardService boardService;
     private final BoardQueryService boardQueryService;
+    private final BoardColumnQueryService boardColumnQueryService;
 
-    public BoardController(BoardService boardService, BoardQueryService boardQueryService) {
+    public BoardController(BoardService boardService,
+                          BoardQueryService boardQueryService,
+                          BoardColumnQueryService boardColumnQueryService) {
         this.boardService = boardService;
         this.boardQueryService = boardQueryService;
+        this.boardColumnQueryService = boardColumnQueryService;
     }
-
 
     @GetMapping
     public ResponseEntity<List<Board>> findAllBoards() {
         List<Board> boards = boardQueryService.findAllBoards();
         return ResponseEntity.ok(boards);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<BoardDTO> findBoardById(@PathVariable int id) {
@@ -47,6 +52,10 @@ public class BoardController {
                 .orElseThrow(() -> new NotFoundException("Quadro com ID " + id + " não encontrado."));
     }
 
+    @GetMapping("/{id}/columns")
+    public ResponseEntity<List<BoardColumn>> getBoardColumns(@PathVariable int id) {
+        return ResponseEntity.ok(boardColumnQueryService.findAllByBoardId(id));
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -54,7 +63,6 @@ public class BoardController {
 
         boardService.createNewBoard(request.getName());
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBoard(@PathVariable int id) {
@@ -65,6 +73,18 @@ public class BoardController {
         } else {
 
             throw new NotFoundException("Quadro com ID " + id + " não encontrado.");
+        }
+    }
+
+    public static class CreateBoardRequest {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

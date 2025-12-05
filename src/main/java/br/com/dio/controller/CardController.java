@@ -1,16 +1,12 @@
 package br.com.dio.controller;
 
+import br.com.dio.dto.CardDTO;
 import br.com.dio.dto.CreateCardRequest;
-import br.com.dio.dto.MoveCardRequest;
 import br.com.dio.dto.UpdateCardRequest;
-
 import br.com.dio.exception.NotFoundException;
-
 import br.com.dio.model.Card;
-
 import br.com.dio.service.CardQueryService;
 import br.com.dio.service.CardService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cards")
+@CrossOrigin(origins = "*")
 public class CardController {
+
     private final CardService cardService;
     private final CardQueryService cardQueryService;
 
@@ -26,35 +24,37 @@ public class CardController {
         this.cardService = cardService;
         this.cardQueryService = cardQueryService;
     }
+
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED) // Retorna 201 Created
-    public void createCard(@Validated @RequestBody CreateCardRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> createCard(@Validated @RequestBody CreateCardRequest request) {
         cardService.createNewCard(request.getTitle(), request.getDescription(), request.getColumnId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCard(@PathVariable int id, @Validated @RequestBody UpdateCardRequest request) {
+    public ResponseEntity<CardDTO> updateCard(@PathVariable int id, @Validated @RequestBody UpdateCardRequest request) {
 
         Card card = cardQueryService.findCardById(id)
                 .orElseThrow(() -> new NotFoundException("Cartão com ID " + id + " não encontrado."));
 
         cardService.updateCard(card, request.getTitle(), request.getDescription());
 
-        return ResponseEntity.ok().build();
+        CardDTO cardDTO = new CardDTO(card);
+        return ResponseEntity.ok(cardDTO);
     }
 
     @PutMapping("/{id}/move")
-    public ResponseEntity<Void> moveCard(@PathVariable int id, @Validated @RequestBody MoveCardRequest request) {
-
+    public ResponseEntity<Void> moveCard(@PathVariable int id, @RequestParam int newColumnId) {
 
         Card card = cardQueryService.findCardById(id)
                 .orElseThrow(() -> new NotFoundException("Cartão com ID " + id + " não encontrado."));
 
 
-        cardService.moveCard(card, request.getNewColumnId());
+        cardService.moveCard(card, newColumnId);
 
         return ResponseEntity.ok().build();
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCard(@PathVariable int id) {
@@ -65,9 +65,6 @@ public class CardController {
 
         cardService.deleteCard(id);
 
-        return ResponseEntity.noContent().build(); // Retorna 204 No Content (sucesso sem corpo)
+        return ResponseEntity.noContent().build();
     }
 }
-
-
-
