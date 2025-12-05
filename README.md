@@ -30,6 +30,7 @@ Pré-requisitos
 Passos
 
     Clone o repositório:
+    
     Bash
     git clone https://github.com/seu-usuario/board-tarefas-dio.git
     cd board-tarefas-dio
@@ -57,12 +58,12 @@ O projeto utiliza o H2 Database em modo arquivo.
 
 🔌 Endpoints Principais
 
-    Método	   Recurso	            Descrição
-     GET 	 /api/boards	       Lista todos os quadros
-     POST	 /api/boards	       Cria um novo quadro
-     GET	 /api/boards/{id}      Detalhes de um quadro (com colunas e cards)
-     POST	 /api/cards	         Cria um novo cartão
-     PUT	 /api/cards/{id}/move  Move um cartão de coluna
+    Método	    Recurso	                  Descrição
+     GET 	  /api/boards	         Lista todos os quadros
+     POST	  /api/boards	         Cria um novo quadro
+     GET	  /api/boards/{id}       Detalhes de um quadro (com colunas e cards)
+     POST	  /api/cards	         Cria um novo cartão
+     PUT	  /api/cards/{id}/move   Move um cartão de coluna
 
 🧪 Testes
 
