@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board de Tarefas - DIO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Board de Tarefas</h1>
+            <button id="btnNewBoard" class="btn-primary">+ Novo Board</button>
+        </header>
+
+        <div id="boardsList" class="boards-list"></div>
+
+        <div id="boardDetail" class="board-detail" style="display: none;">
+            <div class="board-header">
+                <button id="btnBackToList" class="btn-secondary">← Voltar</button>
+                <h2 id="boardTitle"></h2>
+                <button id="btnDeleteBoard" class="btn-danger">🗑️ Deletar Board</button>
+            </div>
+            <div id="columnsContainer" class="columns-container"></div>
+        </div>
+    </div>
+
+    <!-- Modal para criar board -->
+    <div id="modalNewBoard" class="modal">
+        <div class="modal-content">
+            <h3>Criar Novo Board</h3>
+            <input type="text" id="inputBoardName" placeholder="Nome do board..." />
+            <div class="modal-actions">
+                <button id="btnCancelModal" class="btn-secondary">Cancelar</button>
+                <button id="btnConfirmCreate" class="btn-primary">Criar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para criar/editar card -->
+    <div id="modalCard" class="modal">
+        <div class="modal-content">
+            <h3 id="modalCardTitle">Criar Novo Card</h3>
+            <input type="text" id="inputCardTitle" placeholder="Título do card..." />
+            <textarea id="inputCardDescription" placeholder="Descrição (opcional)..." rows="4"></textarea>
+            <div class="modal-actions">
+                <button id="btnCancelCardModal" class="btn-secondary">Cancelar</button>
+                <button id="btnConfirmCard" class="btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
