@@ -45,7 +45,6 @@ Linux/Mac:
         ./gradlew bootRun
     Acesse:
         Frontend: http://localhost:8080
-
         Banco de Dados (H2 Console): http://localhost:8080/h2-console
 
 🗄️ Configuração do Banco de Dados
