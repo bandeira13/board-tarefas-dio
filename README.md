@@ -1,7 +1,6 @@
 📋 Board de Tarefas - API de Estudo
 
 Este projeto nasceu inicialmente com o objetivo de ser um Board de Tarefas (estilo Kanban) e evoluiu para se tornar uma API REST completa para fins de estudo.
-
 O foco principal do desenvolvimento foi praticar a construção de uma aplicação Java com Spring Boot, explorando conceitos fundamentais de Backend, como arquitetura em camadas, persistência de dados e integração com um Frontend.
 
 🚀 O Que Usei no Projeto?
@@ -9,7 +8,6 @@ O foco principal do desenvolvimento foi praticar a construção de uma aplicaç�
 Para tirar essa ideia do papel, utilizei as tecnologias que o mercado pede, focando em boas práticas:
 
     Java 17: A base sólida de tudo.
-
     Spring Boot 3: Para agilizar o desenvolvimento e cuidar de toda a configuração mágica (Web, JDBC, Validações).
     Gradle: Para gerir as dependências do projeto.
     H2 Database: Um banco de dados SQL que roda num arquivo local (perfeito para testes rápidos sem precisar instalar nada pesado).
@@ -45,9 +43,7 @@ Linux/Mac:
             
     Bash
         ./gradlew bootRun
-
     Acesse:
-
         Frontend: http://localhost:8080
 
         Banco de Dados (H2 Console): http://localhost:8080/h2-console
@@ -66,7 +62,7 @@ O projeto utiliza o H2 Database em modo arquivo.
      GET 	 /api/boards	       Lista todos os quadros
      POST	 /api/boards	       Cria um novo quadro
      GET	 /api/boards/{id}      Detalhes de um quadro (com colunas e cards)
-     POST	 /api/cards	       Cria um novo cartão
+     POST	 /api/cards	         Cria um novo cartão
      PUT	 /api/cards/{id}/move  Move um cartão de coluna
 
 🧪 Testes
